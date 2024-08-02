@@ -7,7 +7,7 @@ In data science, hypothesis testing is a fundamental part of statistical analysi
 ### Z-Test:
 
 Used to determine if there is a significant difference between sample and population means.
-Assumes the sample size is large (typically 𝑛>30 n>30) and data follows a normal distribution.
+Assumes the sample size is large (typically n>30) and data follows a normal distribution.
 
 ### T-Test:
 Used to compare the means of two groups.
