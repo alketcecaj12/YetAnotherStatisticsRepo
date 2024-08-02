@@ -1,7 +1,8 @@
 # Yet Another Insignificant Statistics Note
 
 In data science, hypothesis testing is a fundamental part of statistical analysis, used to make inferences or draw conclusions about populations based on sample data.
-The most frequently used hypothesis tests in data science include:
+
+## This repo contains the most frequently used hypothesis tests in data science with use cases and Python code examples:
 
 ### Z-Test:
 
