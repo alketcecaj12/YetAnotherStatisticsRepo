@@ -1,6 +1,6 @@
 # Yet Another Insignificant Statistics Note
 
-<img src = "stats.png width = "800" height = "500">
+<img src = stats.png width = "800" height = "500">
 
 In data science, hypothesis testing is a fundamental part of statistical analysis, used to make inferences or draw conclusions about populations based on sample data.
 
