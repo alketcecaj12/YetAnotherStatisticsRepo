@@ -1,59 +1,137 @@
-# Yet Another Insignificant Statistics Note
+# 📊 Yet Another Statistics Repo
+> *Because you can never have too many hypothesis tests — with Python code, real use cases, and zero fluff.*
 
-<img src = stats.png width = "800" height = "500">
+[![Python](https://img.shields.io/badge/Python-3.9%2B-blue?logo=python&logoColor=white)](https://www.python.org/)
+[![SciPy](https://img.shields.io/badge/SciPy-statistical%20tests-8CAAE6?logo=scipy&logoColor=white)](https://scipy.org/)
+[![Jupyter](https://img.shields.io/badge/Jupyter-Notebook-F37626?logo=jupyter&logoColor=white)](https://jupyter.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
-In data science, hypothesis testing is a fundamental part of statistical analysis, used to make inferences or draw conclusions about populations based on sample data.
+---
 
-## This repo contains the most frequently used hypothesis tests in data science with use cases and Python code examples:
+## 🎯 What Is This?
 
-### Z-Test:
+Hypothesis testing is one of the most misunderstood — and most misused — tools in data science. This repository cuts through the noise with **clear explanations, decision logic, and working Python code** for the most frequently used statistical tests.
 
-Used to determine if there is a significant difference between sample and population means.
-Assumes the sample size is large (typically n>30) and data follows a normal distribution.
+Whether you're validating an A/B test, checking model assumptions, or analysing survey data, this is your practical reference.
 
-### T-Test:
-Used to compare the means of two groups.
-Independent T-Test: Compares means from two different groups.
-Paired T-Test: Compares means from the same group at different times.
-One-Sample T-Test: Compares the mean of a single group against a known mean.
+---
 
-### Chi-Square Test:
+## 🧭 Which Test Should I Use?
 
-Used for categorical data to assess how likely it is that an observed distribution is due to chance.
-Chi-Square Goodness of Fit Test: Determines if a sample matches the population.
-Chi-Square Test for Independence: Determines if there is an association between two categorical variables.
+```
+Is your data categorical?
+├── Yes → Chi-Square Test (goodness of fit or independence)
+└── No (continuous)
+    ├── Comparing to a known mean?
+    │   ├── Large sample (n > 30) → Z-Test
+    │   └── Small sample → One-Sample T-Test
+    ├── Comparing two groups?
+    │   ├── Independent groups, normal → Independent T-Test
+    │   ├── Paired / repeated measures, normal → Paired T-Test
+    │   ├── Independent groups, non-normal → Mann-Whitney U
+    │   └── Paired, non-normal → Wilcoxon Signed-Rank
+    ├── Comparing three or more groups?
+    │   ├── Normal → ANOVA (One-Way or Two-Way)
+    │   └── Non-normal → Kruskal-Wallis
+    ├── Comparing variances? → F-Test
+    ├── Measuring association?
+    │   ├── Linear relationship → Pearson Correlation
+    │   └── Monotonic / non-normal → Spearman Rank Correlation
+    └── Comparing survival curves? → Log-Rank Test
+```
 
-### ANOVA (Analysis of Variance):
+---
 
-Used to compare means among three or more groups.
-One-Way ANOVA: Tests differences between groups based on one independent variable.
-Two-Way ANOVA: Tests differences based on two independent variables.
+## 📋 Tests Covered
 
-### F-Test:
+### Parametric Tests *(assume normality)*
 
-Used to compare two variances to see if they come from populations with equal variances.
-Often used in conjunction with ANOVA.
+| Test | Use Case | Key Assumption |
+|------|----------|----------------|
+| **Z-Test** | Sample mean vs. population mean | n > 30, known σ |
+| **One-Sample T-Test** | Group mean vs. known value | Normal distribution |
+| **Independent T-Test** | Two independent group means | Normal, equal-ish variance |
+| **Paired T-Test** | Same group, two time points | Normal differences |
+| **One-Way ANOVA** | 3+ group means, one factor | Normal, homoscedastic |
+| **Two-Way ANOVA** | 3+ group means, two factors | Normal, homoscedastic |
+| **F-Test** | Comparing two variances | Normal distribution |
 
-### Mann-Whitney U Test:
+### Non-Parametric Tests *(distribution-free)*
 
-A non-parametric test used to compare differences between two independent groups when the sample distributions are not normally distributed.
+| Test | Parametric Equivalent | Use Case |
+|------|----------------------|----------|
+| **Mann-Whitney U** | Independent T-Test | Two independent groups, non-normal |
+| **Wilcoxon Signed-Rank** | Paired T-Test | Paired samples, non-normal |
+| **Kruskal-Wallis** | One-Way ANOVA | 3+ groups, non-normal |
+| **Spearman Correlation** | Pearson Correlation | Monotonic relationships |
 
-### Wilcoxon Signed-Rank Test:
+### Association & Survival
 
-A non-parametric test used for comparing two paired samples or repeated measurements on a single sample.
+| Test | Use Case |
+|------|----------|
+| **Chi-Square (GoF)** | Does observed match expected distribution? |
+| **Chi-Square (Independence)** | Are two categorical variables associated? |
+| **Pearson Correlation** | Strength of linear relationship |
+| **Log-Rank Test** | Compare survival curves between groups |
 
-### Kruskal-Wallis Test:
+---
 
-A non-parametric version of ANOVA, used for comparing three or more groups.
+## ⚡ Quick-Start Example
 
-### Pearson Correlation Coefficient Test:
+```python
+from scipy import stats
+import numpy as np
 
-Measures the strength and direction of the linear relationship between two continuous variables.
+# Independent T-Test: do two groups have different means?
+group_a = np.array([23, 25, 28, 22, 27, 30])
+group_b = np.array([30, 35, 33, 28, 32, 36])
 
-### Spearman Rank Correlation Test:
+t_stat, p_value = stats.ttest_ind(group_a, group_b)
 
-A non-parametric test that assesses how well the relationship between two variables can be described using a monotonic function.
+print(f"T-statistic: {t_stat:.4f}")
+print(f"P-value:     {p_value:.4f}")
 
-### Log-Rank Test:
+if p_value < 0.05:
+    print("✅ Reject H₀ — significant difference between groups")
+else:
+    print("❌ Fail to reject H₀ — no significant difference")
+```
 
-Used to compare the survival distributions of two samples.
+---
+
+## 🛠️ Installation
+
+```bash
+git clone https://github.com/alketcecaj12/YetAnotherStatisticsRepo.git
+cd YetAnotherStatisticsRepo
+
+pip install scipy numpy pandas matplotlib seaborn jupyter
+
+jupyter notebook
+```
+
+---
+
+## 🔑 Core Concepts at a Glance
+
+| Concept | Meaning |
+|---------|---------|
+| **H₀ (Null hypothesis)** | No effect / no difference |
+| **H₁ (Alternative hypothesis)** | There is an effect / difference |
+| **p-value** | Probability of observing the data if H₀ is true |
+| **α (significance level)** | Threshold — typically 0.05 |
+| **Type I Error** | Rejecting H₀ when it's actually true (false positive) |
+| **Type II Error** | Failing to reject H₀ when it's actually false (false negative) |
+| **Statistical power** | Probability of correctly detecting a real effect |
+
+---
+
+## 👤 Author
+
+**Alket Cecaj**  
+Quantitative Risk Analyst & Data Scientist | PhD | Copenhagen  
+📎 [GitHub @alketcecaj12](https://github.com/alketcecaj12)
+
+---
+
+## ⭐ Found it useful? Give it a star and save yourself a Google search next time.
